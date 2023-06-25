@@ -11,6 +11,7 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text highScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -35,6 +36,11 @@ public class MainManager : MonoBehaviour
                 brick.PointValue = pointCountArray[i];
                 brick.onDestroyed.AddListener(AddPoint);
             }
+        }
+
+        if (DataManager.instance.highScores.firstScore > 0)
+        {
+            SetHighScore();
         }
     }
 
@@ -72,5 +78,54 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        if (DataManager.instance.highScores.firstScore < m_Points)
+        {
+            SetDataFirst();
+            SetHighScore();
+            return;
+        }
+
+        if (DataManager.instance.highScores.secondScore < m_Points)
+        {
+            SetDataSecond();
+            SetHighScore();
+            return;
+        }
+
+        if (DataManager.instance.highScores.thirdScore < m_Points)
+        {
+            SetDataThird();
+            SetHighScore();
+        }
+    }
+
+    public void SetDataFirst()
+    {
+        DataManager.instance.highScores.thirdScore = DataManager.instance.highScores.secondScore;
+        DataManager.instance.highScorePlayerNames.third = DataManager.instance.highScorePlayerNames.second;
+        DataManager.instance.highScores.secondScore = DataManager.instance.highScores.firstScore;
+        DataManager.instance.highScorePlayerNames.second = DataManager.instance.highScorePlayerNames.first;
+        DataManager.instance.highScores.firstScore = m_Points;
+        DataManager.instance.highScorePlayerNames.first = DataManager.instance.playerName;
+    }
+
+    public void SetDataSecond()
+    {
+        DataManager.instance.highScores.thirdScore = DataManager.instance.highScores.secondScore;
+        DataManager.instance.highScorePlayerNames.third = DataManager.instance.highScorePlayerNames.second;
+        DataManager.instance.highScores.secondScore = m_Points;
+        DataManager.instance.highScorePlayerNames.second = DataManager.instance.playerName;
+    }
+
+    public void SetDataThird()
+    {
+        DataManager.instance.highScores.thirdScore = m_Points;
+        DataManager.instance.highScorePlayerNames.third = DataManager.instance.playerName;
+    }
+    public void SetHighScore()
+    {
+        
+        highScoreText.text = $"Best Score : {DataManager.instance.highScorePlayerNames.first} : {DataManager.instance.highScores.firstScore}";
+        DataManager.instance.SaveScore();
     }
 }
