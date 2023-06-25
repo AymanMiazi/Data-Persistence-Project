@@ -548,6 +548,7 @@ MonoBehaviour:
   ScoreText: {fileID: 188020406}
   highScoreText: {fileID: 2078529056}
   GameOverText: {fileID: 474497238}
+  values: 010000000200000005000000
 --- !u!1 &455529321
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +736,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.0627451, g: 0.6039216, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

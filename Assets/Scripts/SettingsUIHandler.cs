@@ -28,11 +28,13 @@ public class SettingsUIHandler : MonoBehaviour
     
     public void ReturnToMenu()
     {
+        UpdateSettings();
         SceneManager.LoadScene(0);
     }
 
     public void SaveSettings()
     {
+        UpdateSettings();
         DataManager.instance.SaveSettings();
     }
     
@@ -49,5 +51,11 @@ public class SettingsUIHandler : MonoBehaviour
         fourth.value = DataManager.instance.settings.fourth;
         fifth.value = DataManager.instance.settings.fifth;
         sixth.value = DataManager.instance.settings.sixth;
+        first.RefreshShownValue();
+        second.RefreshShownValue();
+        third.RefreshShownValue();
+        fourth.RefreshShownValue();
+        fifth.RefreshShownValue();
+        sixth.RefreshShownValue();
     }
 }

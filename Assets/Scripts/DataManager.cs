@@ -107,9 +107,7 @@ public class DataManager : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            Debug.Log(json);
             SettingsData data = JsonUtility.FromJson<SettingsData>(json);
-            Debug.Log(data);
             settings = data.userSettings;
         }
     }
