@@ -19,16 +19,20 @@ public class MainManager : MonoBehaviour
     int[] pointCountArray;
     
     private bool m_GameOver = false;
-
+    public int[] values = { 1, 2, 5 };
     
     // Start is called before the first frame update
     void Start()
     {
-        DataManager.Settings DM = DataManager.instance.settings;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
-        pointCountArray = new int[] { DM.first, DM.second, DM.third, DM.fourth, DM.fifth, DM.sixth };
+
+        pointCountArray = new int[]
+        {
+            values[DataManager.instance.settings.first], values[DataManager.instance.settings.second],
+            values[DataManager.instance.settings.third], values[DataManager.instance.settings.fourth],
+            values[DataManager.instance.settings.fifth], values[DataManager.instance.settings.sixth]
+        };
         for (int i = 0; i < LineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)

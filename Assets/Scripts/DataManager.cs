@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager instance;
-    public string playerName;
-    public HighScorePlayerNames highScorePlayerNames;
-    public HighScores highScores;
-    public Settings settings;
-    public int[] values = { 1, 2, 5 };
+    [NonSerialized] public static DataManager instance;
+    [NonSerialized] public string playerName;
+    [NonSerialized] public HighScorePlayerNames highScorePlayerNames;
+    [NonSerialized] public HighScores highScores;
+    [NonSerialized] public Settings settings;
 
     [Serializable]
     public class SaveData
@@ -19,6 +20,13 @@ public class DataManager : MonoBehaviour
         public HighScorePlayerNames names;
         public HighScores scores;
     }
+    
+    [Serializable]
+    public class SettingsData
+    {
+        public Settings userSettings;
+    }
+    
     [Serializable]
     public class Settings
     {
@@ -28,11 +36,6 @@ public class DataManager : MonoBehaviour
         public int fourth;
         public int fifth;
         public int sixth;
-    }
-    [Serializable]
-    public class SettingsData
-    {
-        public Settings settings;
     }
 
     [Serializable]
@@ -59,8 +62,8 @@ public class DataManager : MonoBehaviour
         }
         instance = this;
         LoadData();
-        DontDestroyOnLoad(gameObject);
         LoadSettings();
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SaveScore()
@@ -71,22 +74,22 @@ public class DataManager : MonoBehaviour
         data.scores = highScores;
 
         string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "savefile.json",json);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json",json);
     }
     
     public void SaveSettings()
     {
         SettingsData data = new SettingsData();
     
-        data.settings = settings;
+        data.userSettings = settings;
     
         string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "settings.json",json);
+        File.WriteAllText(Application.persistentDataPath + "/settings.json",json);
     }
 
     public void LoadData()
     {
-        string path = Application.persistentDataPath + "savefile.json";
+        string path = Application.persistentDataPath + "/savefile.json";
 
         if (File.Exists(path))
         {
@@ -99,13 +102,15 @@ public class DataManager : MonoBehaviour
     
     public void LoadSettings()
     {
-        string path = Application.persistentDataPath + "settings.json";
+        string path = Application.persistentDataPath + "/settings.json";
     
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
+            Debug.Log(json);
             SettingsData data = JsonUtility.FromJson<SettingsData>(json);
-            settings = data.settings;
+            Debug.Log(data);
+            settings = data.userSettings;
         }
     }
 }
