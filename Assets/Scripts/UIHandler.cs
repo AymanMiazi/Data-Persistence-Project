@@ -28,4 +28,9 @@ public class UIHandler : MonoBehaviour
    {
       DataManager.instance.playerName = playerName;
    }
+
+   public void Settings()
+   {
+      SceneManager.LoadScene(3);
+   }
 }
